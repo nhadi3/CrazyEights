@@ -21,17 +21,23 @@ public class GameEngineTest {
         testCards = deckOfCards.subList(0,5);
         testPlayer.init(1, null);
         testPlayer.receiveInitialCards(testCards);
+        testPlayerList = GameEngine.createPlayerList();
+    }
+
+    @Test
+    public void getCorrectStartingTopPileCard() {
+        assertEquals(deckOfCards.get(0),GameEngine.getStartingTopPileCard());
     }
 
     @Test
     public void getCorrectWinner() {
+        testPlayerList = GameEngine.createPlayerList();
         testPlayerList.get(2).addScore(205);
         assertEquals(testPlayerList.get(2), GameEngine.getWinnerOfGame());
     }
 
     @Test
     public void correctlyCreatePlayerList() {
-        testPlayerList = new ArrayList<>(Arrays.asList(Player.getPlayers()));
         List<Player> playerList = new ArrayList<>(GameEngine.createPlayerList());
         assertEquals(testPlayerList, playerList);
     }
