@@ -17,6 +17,7 @@ public class PlayerTest {
     @Before
     public void setUp() {
         testCards = deckOfCards.subList(0,5);
+        testPlayer.init(1, null);
         testPlayer.receiveInitialCards(testCards);
     }
 
@@ -35,6 +36,11 @@ public class PlayerTest {
     @Test
     public void getCorrectGreatestSuitInHand() {
         assertEquals(Card.Suit.DIAMONDS, testPlayer.getGreatestSuit());
+    }
+
+    @Test
+    public void getCorrectPlayerId() {
+        assertEquals(1, testPlayer.getPlayerId());
     }
 
     @Test

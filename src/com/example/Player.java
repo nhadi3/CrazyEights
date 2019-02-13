@@ -11,6 +11,7 @@ public class Player implements PlayerStrategy {
     private List<Card> myCards = new ArrayList<>();
     private List<PlayerTurn> opponentMoves;
     private Card cardToPlay;
+    private int totalScore = 0;
 
     /**
      * Gives the player their assigned id, as well as a list of the opponents' assigned ids.
@@ -114,6 +115,20 @@ public class Player implements PlayerStrategy {
     }
 
     /**
+     * Add score of match to players total score.
+     */
+    public void addScore(int score) {
+        totalScore += score;
+    }
+
+    /**
+     * Return the player's current total score.
+     */
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    /**
      * Counts the number of cards of each type of suit and finds the greatest suit.
      * @return the suit with the greatest amount of cards in hand
      */
@@ -184,5 +199,18 @@ public class Player implements PlayerStrategy {
      */
     public void reset() {
         myCards.clear();
+    }
+
+    /**
+     * Returns the player id of the given player.
+     * @return
+     */
+    public int getPlayerId() {
+        return setPlayerId;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getPlayerId());
     }
 }

@@ -84,4 +84,9 @@ public class Card {
 
         return cardDeck;
     }
+
+    @Override
+    public String toString() {
+        return getRank().toString() + " of " + getSuit().toString();
+    }
 }
