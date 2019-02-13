@@ -119,20 +119,13 @@ public class Player implements PlayerStrategy {
         for (int i = 0; i < myCards.size(); i ++) {
             if (myCards.get(i).getSuit().equals(topPileCard.getSuit())) {
                 cardToPlay = myCards.get(i);
-                myCards.remove(i);
-                break;
             } else if (myCards.get(i).getRank().equals(topPileCard.getRank())) {
                 cardToPlay = myCards.get(i);
-                myCards.remove(i);
-                break;
             } else if (myCards.get(i).getRank().equals(Card.Rank.EIGHT)) {
                 cardToPlay = myCards.get(i);
-                myCards.remove(i);
-                break;
-            } else {
-                cardToPlay = null;
             }
         }
+        myCards.remove(cardToPlay);
         myCards.add(0, cardToPlay);
     }
 

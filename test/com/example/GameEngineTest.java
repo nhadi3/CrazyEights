@@ -32,7 +32,7 @@ public class GameEngineTest {
     @Test
     public void correctlyCreatePlayerList() {
         testPlayerList = new ArrayList<>(Arrays.asList(Player.getPlayers()));
-        List<Player> playerList = GameEngine.createPlayerList();
-        assertArrayEquals(testPlayerList, playerList);
+        List<Player> playerList = new ArrayList<>(GameEngine.createPlayerList());
+        assertEquals(testPlayerList, playerList);
     }
 }
