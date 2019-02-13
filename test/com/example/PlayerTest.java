@@ -44,6 +44,12 @@ public class PlayerTest {
     }
 
     @Test
+    public void getCorrectTotalScore() {
+        testPlayer.addScore(1000);
+        assertEquals(1000, testPlayer.getTotalScore());
+    }
+
+    @Test
     public void correctlyResetTheGame() {
         testPlayer.reset();
         List<Card> empty = new ArrayList<>();

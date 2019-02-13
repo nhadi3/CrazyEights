@@ -30,9 +30,6 @@ public class Player implements PlayerStrategy {
      * @param cards The initial list of cards dealt to this player
      */
     public void receiveInitialCards(List<Card> cards) {
-        if (cards == null) {
-            System.exit(0);
-        }
         myCards.addAll(cards);
     }
 
@@ -82,6 +79,39 @@ public class Player implements PlayerStrategy {
     }
 
     /**
+     * Called if this player decided to play a "8" card. This player should then return the
+     * Card.Suit enum that it wishes to set for the discard pile.
+     */
+    public Card.Suit declareSuit() {
+        return getGreatestSuit();
+    }
+
+    /**
+     * Called at the very beginning of this player's turn to give it context of what its opponents
+     * chose to do on each of their turns.
+     *
+     * @param opponentActions A list of what the opponents did on each of their turns
+     */
+    public void processOpponentActions(List<PlayerTurn> opponentActions) {
+        opponentMoves = opponentActions;
+    }
+
+    /**
+     * Called when the game is being reset for the next round.
+     */
+    public void reset() {
+        myCards.clear();
+    }
+
+    /**
+     * Returns the player id of the given player.
+     * @return the player id
+     */
+    public int getPlayerId() {
+        return setPlayerId;
+    }
+
+    /**
      * Determines the card that should be played.
      * @return the card to play
      */
@@ -104,28 +134,6 @@ public class Player implements PlayerStrategy {
             }
         }
         myCards.add(0, cardToPlay);
-    }
-
-    /**
-     * Called if this player decided to play a "8" card. This player should then return the
-     * Card.Suit enum that it wishes to set for the discard pile.
-     */
-    public Card.Suit declareSuit() {
-        return getGreatestSuit();
-    }
-
-    /**
-     * Add score of match to players total score.
-     */
-    public void addScore(int score) {
-        totalScore += score;
-    }
-
-    /**
-     * Return the player's current total score.
-     */
-    public int getTotalScore() {
-        return totalScore;
     }
 
     /**
@@ -163,15 +171,6 @@ public class Player implements PlayerStrategy {
             return Card.Suit.CLUBS;
         }
     }
-    /**
-     * Called at the very beginning of this player's turn to give it context of what its opponents
-     * chose to do on each of their turns.
-     *
-     * @param opponentActions A list of what the opponents did on each of their turns
-     */
-    public void processOpponentActions(List<PlayerTurn> opponentActions) {
-        opponentMoves = opponentActions;
-    }
 
     /**
      * Get an array of players.
@@ -188,25 +187,25 @@ public class Player implements PlayerStrategy {
 
     /**
      * Return the hand of the player.
-     * @return - the cards in the players hand.
+     * @return - the cards in the players hand
      */
     public List<Card> getMyCards() {
         return myCards;
     }
 
     /**
-     * Called when the game is being reset for the next round.
+     * Add score of match to players total score.
      */
-    public void reset() {
-        myCards.clear();
+    public void addScore(int score) {
+        totalScore += score;
     }
 
     /**
-     * Returns the player id of the given player.
-     * @return
+     * Get the player's current total score.
+     * @return - the player's total score
      */
-    public int getPlayerId() {
-        return setPlayerId;
+    public int getTotalScore() {
+        return totalScore;
     }
 
     @Override
