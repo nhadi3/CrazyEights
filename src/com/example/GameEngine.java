@@ -29,7 +29,79 @@ public class GameEngine {
      */
     public static void main(String [] arguments) {
         playerList = createPlayerList();
+        gameEngine();
         System.out.print("The winner of the game is Player " + getWinnerOfGame());
+    }
+
+    /**
+     * Runs the entire game until there is a winner.
+     */
+    public static void gameEngine() {
+        int matchNumber = 0;
+
+        while (!gameEnded) {
+            playAMatch();
+            matchNumber++;
+            System.out.println("\n" + "Player scores for Match " + matchNumber + ":");
+            for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
+                System.out.println("Player" + playerList.get(i).getPlayerId()
+                        + "'s score is " + playerList.get(i).getTotalScore());
+                if (playerList.get(i).getTotalScore() >= 200) {
+                    gameEnded = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * Plays a match and determines the winner of the match.
+     */
+    public static void playAMatch() {
+        boolean matchEnded = false;
+        giveInitialCardsToPlayers();
+        topPileCard = getStartingTopPileCard();
+
+        while (!matchEnded) {
+            if (deckOfCards.size() > 0) {
+                for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
+                    if (playerList.get(i).getMyCards().size() == 0) {
+                        addMatchScore(playerList.get(i));
+                        matchEnded = true;
+                        deckOfCards.clear();
+                        break;
+                    }
+                    if (!(playerList.get(i).shouldDrawCard(topPileCard, topPileCard.getSuit()))) {
+                        playerList.get(i).getCardToPlay(topPileCard);
+                        topPileCard = playerList.get(i).playCard();
+                        playerList.get(i).getMyCards().remove(0);
+
+                        if (playerList.get(i).getMyCards().size() == 0) {
+                            addMatchScore(playerList.get(i));
+                            matchEnded = true;
+                            deckOfCards.clear();
+                            break;
+                        }
+                    } else {
+                        if (deckOfCards.size() != 0) {
+                            playerList.get(i).receiveCard(deckOfCards.get(INDEX_OF_TOP_CARD_OF_DECK));
+                            deckOfCards.remove(INDEX_OF_TOP_CARD_OF_DECK);
+
+                            if (deckOfCards.size() == 0) {
+                                addTiedMatchScore();
+                                matchEnded = true;
+                                deckOfCards.clear();
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else {
+                addTiedMatchScore();
+            }
+        }
+        for (int i = 0; i < NUMBER_OF_PLAYERS; i++) {
+            playerList.get(i).reset();
+        }
     }
 
     /**
